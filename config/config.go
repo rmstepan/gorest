@@ -28,9 +28,9 @@ var cfg *ini.File
 // Setup initialize the configuration instance
 func Setup() {
 	var err error
-	cfg, err = ini.Load("conf/conf.ini")
+	cfg, err = ini.Load("config/conf.ini")
 	if err != nil {
-		log.Fatalf("config.Setup, fail to parse 'conf/conf.ini': %v", err)
+		log.Fatalf("config.Setup, fail to parse 'config/conf.ini': %v", err)
 	}
  
 	mapTo("database", DatabaseSetting)
