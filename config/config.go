@@ -1,7 +1,8 @@
 package config
 
 import (
-	"log"
+	log "../logger"
+
 	"github.com/go-ini/ini"
 )
 
@@ -27,10 +28,12 @@ var cfg *ini.File
 
 // Setup initialize the configuration instance
 func Setup() {
+	log.InfoLogger.Println("Setting up configuration parameters...")
+
 	var err error
 	cfg, err = ini.Load("config/conf.ini")
 	if err != nil {
-		log.Fatalf("config.Setup, fail to parse 'config/conf.ini': %v", err)
+		log.FatalLogger.Println("config.Setup, fail to parse 'config/conf.ini': %v", err)
 	}
  
 	mapTo("database", DatabaseSetting)
@@ -43,6 +46,6 @@ func Setup() {
 func mapTo(section string, v interface{}) {
 	err := cfg.Section(section).MapTo(v)
 	if err != nil {
-		log.Fatalf("config.MapTo %s err: %v", section, err)
+		log.FatalLogger.Println("config.MapTo %s err: %v", section, err)
 	}
 }
