@@ -3,39 +3,22 @@
 package main
 
 import (
-	"net/http"
-	"github.com/gin-gonic/gin"
+	cfg "./config"
+	datab "./database"
+	log "./logger"
+	routing "./routing"
 )
 
-var router *gin.Engine
+func init() {
+	log.InfoLogger.Println("Initializing packages...")
+
+	cfg.Setup()
+	datab.Setup()
+	routing.Setup()
+}
 
 func main() {
-	// set the router as the default one provided by Gin
-	router := gin.Default()
-	
-	// using LoadHTMLGlob instead of LoadHTMLFiles allows us to use a string pattern in the parameters instead of raw string
-	router.LoadHTMLGlob("templates/*")
+	log.InfoLogger.Println("Starting main app!")
+	routing.Run()
 
-	// inline GET route for the landing page which server the index.html template with necessary data - `title`
-	router.GET("/", func(c *gin.Context){
-		articles := getAllArticles()
-		println(articles)
-	
-		// call the HTML method of the Context to render a template
-		c.HTML(
-			// Set the HTTP status to 200 (OK)
-			http.StatusOK,
-			// use the index.html template
-			"index.html",
-			// Pass the data the page requires
-			gin.H{
-				"title": "Home Page",
-				"payload": articles,
-			})
-	})
-
-	// initializeRoutes()
-
-	// start serving the application
-	router.Run("0.0.0.0:8080")
 }
