@@ -18,7 +18,7 @@ var DatabaseSetting = &Database{}
 type Server struct {
 	RunMode      string
 	HttpAddress	 string
-	HttpPort     int
+	HttpPort     string
 }
 
 var ServerSetting = &Server{}
